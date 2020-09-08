@@ -9,7 +9,10 @@
   <xacro:base name="base_link" />
   
   <xacro:caster name="caster_link" />
-  <xacro:caster_join name="front_caster_join" child="caster_link" origin_xyz="0.6 0 -0.203"/>
+  <xacro:generic_join name="front_caster_join" child="caster_link" origin_xyz="0.6 0 -0.203"/>
+  
+  <xacro:bar name="lidar_bar_link" />
+  <xacro:generic_join name="lidar_bar_join" child="lidar_bar_link" origin_xyz="0 0 0.2"/>
   
   <xacro:wheel name="front_right_wheel_link" length="0.12" radius="0.18" />
   <xacro:wheel_join name="front_right_wheel_join" child="front_right_wheel_link" origin_xyz="0.6 0.28 -0.203"/>
@@ -22,6 +25,11 @@
    
   <xacro:wheel name="rear_left_wheel_link" length="0.18" radius="0.203" />
   <xacro:wheel_join name="rear_left_wheel_link_join" child="rear_left_wheel_link" origin_xyz="-0.45 -0.31 -0.203"/>
+  
+  <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
+  <xacro:VLP-16 parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="440">
+    <origin xyz="0 0 0.4" rpy="0 0 0" />
+  </xacro:VLP-16>
 
 </robot>
 

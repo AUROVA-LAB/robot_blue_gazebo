@@ -17,6 +17,9 @@
   <gazebo reference="front_right_wheel_link">
     <material>Gazebo/Black</material>
   </gazebo>
+  <gazebo reference="lidar_bar_link">
+    <material>Gazebo/Grey</material>
+  </gazebo>
 
   <gazebo>
     <plugin filename="libgazebo_ros_diff_drive.so" name="differential_drive_controller">

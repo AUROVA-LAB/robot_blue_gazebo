@@ -70,7 +70,7 @@
         <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
       </inertial>
   
-      <collision name="caster_front_collision">
+      <collision name="${name}_collision">
         <origin rpy="0 1.5707 1.5707" xyz="0 0 0" />
           <geometry>
             <sphere radius="0.203"/>
@@ -79,7 +79,32 @@
     </link>
   </macro>
   
-  <macro name="caster_join" params="name child origin_xyz">
+  <macro name="bar" params="name">
+    <link name="${name}">
+      <inertial>
+        <mass value="0.1"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+      </inertial>
+  
+      <collision name="${name}_collision">
+        <origin rpy="0 0 0" xyz="0 0 0" />
+          <geometry>
+            <cylinder length="0.4" radius="0.02"/>
+          </geometry>
+      </collision> 
+      
+      <visual name="${name}_visual">
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <cylinder length="0.4" radius="0.02"/>
+        </geometry> 
+        <material name="white"/>     
+      </visual>
+    </link>
+  </macro>
+  
+  <macro name="generic_join" params="name child origin_xyz">
       <joint name="${name}" type="continuous">
         <origin rpy="0 0 0" xyz="${origin_xyz}"/>
         <child link="${child}" />
