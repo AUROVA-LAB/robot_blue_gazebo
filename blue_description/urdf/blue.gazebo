@@ -37,4 +37,33 @@
     </plugin>
   </gazebo>
   
+  <gazebo>      
+    <plugin filename="libhector_gazebo_ros_gps.so" name="gps" >
+      <alwaysOn>true</alwaysOn>
+      <updateRate>1.0</updateRate>
+      <bodyName>base_link</bodyName>
+      <topicName>fix</topicName>
+      <velocityTopicName>fix_vel</velocityTopicName>
+      <referenceLatitude>38.385</referenceLatitude>
+      <referenceLongitude>-0.515</referenceLongitude>
+      <drift>1.0 1.0 1.0</drift>
+      <gaussianNoise>0.1 0.1 0.1</gaussianNoise>
+      <velocityDrift>0 0 0</velocityDrift>
+      <velocityGaussianNoise>0.1 0.1 0.1</velocityGaussianNoise>
+    </plugin>
+  </gazebo>
+  
+  <gazebo>      
+    <plugin filename="libhector_gazebo_ros_imu.so" name="imu" >
+      <alwaysOn>true</alwaysOn>
+      <updateRate>10.0</updateRate>
+      <bodyName>base_link</bodyName>
+      <topicName>imu</topicName>
+      <accelDrift>1.0 1.0 1.0</accelDrift>
+      <rateDrift>1.0 1.0 1.0</rateDrift>
+      <yawDrift>1.0</yawDrift>
+      <gaussianNoise>0.1</gaussianNoise>
+    </plugin>
+  </gazebo>
+  
 </robot>
