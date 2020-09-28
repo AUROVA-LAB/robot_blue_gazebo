@@ -10,7 +10,7 @@
     <!-- Combine joint values -->
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
 
-    <arg name="x" default="0"/>
+    <arg name="x" default="40.0"/>
     <arg name="y" default="0"/>
     <arg name="z" default="0.5"/>
     <node name="blue_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
