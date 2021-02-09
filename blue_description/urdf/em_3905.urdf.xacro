@@ -43,7 +43,7 @@ limitations under the License.
 
   <!-- chassis_length is measured along the x axis, chassis_width
        along the y axis, and chassis_height along the z axis. -->
-  <xacro:property name="chassis_length" value="1.672"/>
+  <xacro:property name="chassis_length" value="1.41"/>
   <xacro:property name="chassis_width" value="0.797"/>
   <xacro:property name="chassis_height" value="0.01"/>
   <xacro:property name="chassis_mass" value="2.788"/>
@@ -68,8 +68,8 @@ limitations under the License.
        inset from the outer edge of the tire. It is set so that each wheel
        is a "zero offset" wheel. hex_hub_depth = tire_width / 2 -
        axle_length. -->
-  <xacro:property name="hub_dia" value="0.22"/>
-  <xacro:property name="tire_dia" value="0.36"/>
+  <xacro:property name="hub_dia" value="0.32"/>
+  <xacro:property name="tire_dia" value="0.46"/>
   <xacro:property name="tire_width" value="0.1"/>
   <xacro:property name="hex_hub_depth" value="0.02"/>
   <xacro:property name="wheel_mass" value="0.29"/>
@@ -79,9 +79,9 @@ limitations under the License.
        from a U joint to the corresponding hex hub. wheel_travel is the
        vertical wheel travel. -->
   <xacro:property name="wheelbase" value="1.05"/>
-  <xacro:property name="hex_hub_dist" value="0.62"/>
+  <xacro:property name="hex_hub_dist" value="0.625"/>
   <xacro:property name="axle_length" value="0.03"/>
-  <xacro:property name="wheel_travel" value="0.36"/>
+  <xacro:property name="wheel_travel" value="0.46"/>
   <xacro:property name="shock_z_offset" value="0.0"/>
 
   <!-- shock_eff_limit is 2 * ((shock_stroke / 2) * shock_spring_constant) N.
@@ -414,7 +414,7 @@ limitations under the License.
                     
   <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
   <xacro:VLP-16 parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="440">
-    <origin xyz="${wheelbase / 2} 0 ${wheel_travel + 0.4}" rpy="0 0 0" />
+    <origin xyz="${wheelbase / 2} 0 ${wheel_travel + 0.645}" rpy="0.01 0.02 0" />
   </xacro:VLP-16>
 
   <gazebo>
