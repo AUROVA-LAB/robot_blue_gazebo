@@ -413,7 +413,7 @@ limitations under the License.
                     lr_reflect="-1" fr_reflect="-1"/>
                     
   <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
-  <xacro:VLP-16 parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="440">
+  <xacro:VLP-16 parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="450">
     <origin xyz="${wheelbase / 2} 0 ${wheel_travel + 0.645}" rpy="0.01 0.02 0" />
   </xacro:VLP-16>
 
