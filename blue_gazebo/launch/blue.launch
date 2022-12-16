@@ -41,7 +41,7 @@ limitations under the License.
   <arg name="cmd_timeout" default="0.5"/>
 
   <!-- Vehicle pose -->
-  <arg name="x" default="20.0"/>
+  <arg name="x" default="0.0"/>
   <arg name="y" default="0.0"/>
   <arg name="z" default="0.0"/>
   <arg name="roll" default="0.0"/>
@@ -56,6 +56,7 @@ limitations under the License.
     <!-- Create the world. -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
       <arg name="world_name" value="$(arg world_name)"/>
+      <arg name="verbose" value="true"/>
     </include>
 
     <!-- Spawn the vehicle. -->
@@ -63,7 +64,8 @@ limitations under the License.
           args="-urdf -param robot_description -model ackermann_vehicle
                 -gazebo_namespace /$(arg namespace)/gazebo
                 -x $(arg x) -y $(arg y) -z $(arg z)
-                -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)"/>
+                -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)"
+          />
 
     <!-- Load the joint controllers. One of these publishes the joint states
          to joint_states. -->
