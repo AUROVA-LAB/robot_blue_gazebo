@@ -38,6 +38,7 @@ namespace gazebo
     double min_y;
   };
 
+  
   class GZ_PLUGIN_VISIBLE ActorStopObstaclePlugin : public ModelPlugin
   {
     /// \brief Constructor
@@ -55,22 +56,29 @@ namespace gazebo
     /// \param[in] _info Timing information
     private: void OnUpdate(const common::UpdateInfo &_info);
 
-    /// \brief Helper function to avoid obstacles. This implements a very
-    /// simple vector-field algorithm.
-    /// \param[in] _pos Direction vector that should be adjusted according
+    /// \brief Helper function to avoid obstacles. The actor stops when there is the 
+    /// defined obstacles in front of its trajectory.
+    /// \param[in] currentTime The simulation time, to save the animation time. 
     /// to nearby obstacles.
     private: void HandleObstacles(double currentTime);
 
+    /// @brief Load the trajectory animation, defined inside the <plugin> tag.
     private: virtual void LoadTrajectory();
 
+    /// @brief Calculates the front distance from a point to a segment ab in the direction theta.
+    /// @return Returns the distance if it cross the segment in theta direction, otherwise a high distance.
     private: double Distance2Line(ignition::math::Vector3d point, ignition::math::Vector2d a, ignition::math::Vector2d b, double theta);
 
+    /// @brief Used to calculate the four point of the rectangle when the obstacle have theta orientation. 
     private: ignition::math::Vector2d Rotation(ignition::math::Vector3d center,double x, double y, double theta);
 
     /// \brief Pointer to the parent actor.
     private: physics::ActorPtr actor;
 
+    /// @brief Information about the trajectory animation.
     private: std::vector<physics::TrajectoryInfoPtr> trajInfo;
+
+    /// @brief Positions of the trajectory.
     private: std::map<unsigned int, common::PoseAnimation *> trajectories;
 
     /// \brief Pointer to the world, for convenience.
@@ -82,7 +90,7 @@ namespace gazebo
     /// \brief List of connections
     private: std::vector<event::ConnectionPtr> connections;
 
-    /// \brief Obstacle weight (used for vector field)
+    /// \brief Threshold distance to stop the actor
     private: double stop_distance = 1.0;
 
     /// \brief Time scaling factor. Used to coordinate translational motion
@@ -92,12 +100,16 @@ namespace gazebo
     /// \brief Time of the last update.
     private: common::Time lastUpdate;
 
+    /// @brief Play time of the trajectory.
     private: double scriptTime;
+    /// @brief Start time of the trajectory.
     private: double startTime;
+    /// @brief Total time of the trajectory.
     private: double trajectoryLength;
+    /// @brief Direction angle of the actor.
     private: double direction;
 
-    /// \brief List of models to ignore. Used for vector field
+    /// \brief List of obstacle models. It have information about their geometry (only considered rectangles in x-y).
     private: std::vector<StopObstacle> obstacleModels;
 
   };

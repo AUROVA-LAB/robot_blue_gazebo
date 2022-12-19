@@ -59,14 +59,14 @@ void ActorStopObstaclePlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sd
     this->animationFactor = 4.5;
 
 
-  // Read in the other obstacles to ignore
+  // Read in the other obstacles
   if (_sdf->HasElement("obstacles"))
   {
     sdf::ElementPtr modelElem =
       _sdf->GetElement("obstacles")->GetElement("model");
     while (modelElem)
     {
-      // Read in the center correction of the obstacle
+      // Read the geometry of the obstacle (rectangles in x-y)
       double max_x, min_x, max_y, min_y;
       if (modelElem->HasElement("max_x"))
         max_x = modelElem->Get<double>("max_x");
@@ -200,6 +200,7 @@ void ActorStopObstaclePlugin::HandleObstacles(double currentTime)
   bool obstacle=false;
   for (unsigned int i = 0; i < this->world->ModelCount(); ++i)
   {
+    //Search the obstacles models
     physics::ModelPtr model = this->world->ModelByIndex(i);
     for(auto Obstacle : obstacleModels){
       if (Obstacle.id==model->GetName())
@@ -217,18 +218,23 @@ void ActorStopObstaclePlugin::HandleObstacles(double currentTime)
         double distance = std::min(Distance2Line(actorPose, A,B,this->direction),Distance2Line(actorPose, C,A,this->direction));
         distance=std::min(distance, Distance2Line(actorPose, C,D,this->direction)); 
         distance=std::min(distance, Distance2Line(actorPose, D,B,this->direction));
+
         if (distance < stop_distance)
+        // There is an obstacle in front.
         {
           obstacle=true;
           if(actor->IsActive()){
+            //If the actor is moving, stop and save the animation time.
             scriptTime=currentTime - this->startTime;
             actor->Stop();
           }
+          break; //It isn't needed to check the rest of obstacles.
         }
       }
     }
   }
   if(!obstacle && !actor->IsActive()){
+    //Continue the animation
     actor->Play();
     actor->SetScriptTime(scriptTime);
     this->startTime = this->world->SimTime().Double()-scriptTime;
@@ -248,7 +254,7 @@ double ActorStopObstaclePlugin::Distance2Line(ignition::math::Vector3d point, ig
   double alpha = (a.Y() +vy*(point.X()-a.X())/vx -point.Y())/(ny-nx*vy/vx);
   double beta = (point.X()+alpha*nx-a.X())/vx;
 
-  //Check if it cross the line.
+  //Check if it cross the line, with some secure factor, as the actor isn't a point.
   if(beta>-0.15 && beta<1.15 && alpha>0)
     return alpha;
 
@@ -270,18 +276,25 @@ void ActorStopObstaclePlugin::OnUpdate(const common::UpdateInfo &_info)
   if(trajInfo.size()>0){
     double currentTime = this->world->SimTime().Double();
   
-    // Adjust the direction vector by avoiding obstacles
+    // Check if the actor have a obstacle in front.
     this->HandleObstacles(currentTime);
 
     if(this->actor->IsActive()){
+      //Play the trajectory and animation
       scriptTime = currentTime - startTime;
+
+      ///DEBUG///
       //if(std::fmod(scriptTime,0.5)==0) gzdbg<<scriptTime<<" "<<currentTime<<" "<<startTime<<std::endl;
+      //////////
+
+      //Restart the trajectory when it ends.
       if(scriptTime>=trajectoryLength){
         scriptTime-=trajectoryLength;
         startTime=currentTime;
       }
       
       for(auto tinfo : trajInfo){
+        //Search the actual trajectory.
         if(tinfo->startTime<=scriptTime && tinfo->endTime>scriptTime){
           this->actor->SetCustomTrajectory(tinfo);
 
@@ -292,15 +305,18 @@ void ActorStopObstaclePlugin::OnUpdate(const common::UpdateInfo &_info)
             this->trajectories[tinfo->id]->GetInterpolatedKeyFrame(posFrame);
 
             ignition::math::Pose3d pose;
+            //Get the next actor pose.
             pose.Pos()=posFrame.Translation();
             pose.Rot()=posFrame.Rotation()*ignition::math::Quaterniond(1.5707, 0, 0);
             pose.Pos().Z(1.0238);
 
+            //Calculate the direction. 
             auto Traveled = (pose.Pos() - this->actor->WorldPose().Pos());
             double distanceTraveled = Traveled.Length();
             this->direction = atan2(Traveled.Y(),Traveled.X());
+            //Set the script time depending to the distance, to synchronice the animation. 
             this->actor->SetScriptTime(this->actor->ScriptTime() + (distanceTraveled * this->animationFactor));
-
+        
             this->actor->SetWorldPose(pose,false,false);
           }
           break;
