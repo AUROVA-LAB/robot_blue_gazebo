@@ -236,7 +236,6 @@ void ActorStopObstaclePlugin::HandleObstacles(double currentTime)
   if(!obstacle && !actor->IsActive()){
     //Continue the animation
     actor->Play();
-    actor->SetScriptTime(scriptTime);
     this->startTime = this->world->SimTime().Double()-scriptTime;
   }
 }
