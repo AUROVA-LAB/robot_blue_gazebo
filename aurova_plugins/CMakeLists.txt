@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(plugins)
+project(aurova_plugins)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
