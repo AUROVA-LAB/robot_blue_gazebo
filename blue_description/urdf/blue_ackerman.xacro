@@ -586,7 +586,7 @@ limitations under the License.
 
   <!--Velodyne-->             
   <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
-  <xacro:VLP-16 parent="velodyneLink" name="velodyne" topic="/velodyne_points" hz="10" samples="450" gpu="true">
+  <xacro:VLP-16 parent="velodyneLink" name="velodyne" topic="velodyne_points" hz="10" samples="450" gpu="true">
     <origin xyz="0 0 0.55" rpy="0.01 0.02 0" />
   </xacro:VLP-16>
 
