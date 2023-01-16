@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<robot>
+
+  <gazebo reference="base_link">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+  <gazebo reference="rear_left_wheel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <gazebo reference="rear_right_wheel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <gazebo reference="front_left_wheel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <gazebo reference="front_right_wheel_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+  <gazebo reference="lidar_bar_link">
+    <material>Gazebo/Grey</material>
+  </gazebo>
+
+  <gazebo>
+    <plugin filename="libgazebo_ros_diff_drive.so" name="differential_drive_controller">
+      <alwaysOn>true</alwaysOn>
+      <updateRate>20</updateRate>
+      <leftJoint>rear_left_wheel_link_join</leftJoint>
+      <rightJoint>rear_right_wheel_link_join</rightJoint>
+      <wheelSeparation>0.62</wheelSeparation>
+      <wheelDiameter>0.406</wheelDiameter>
+      <torque>0.1</torque>
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <robotBaseFrame>base_link</robotBaseFrame>
+    </plugin>
+  </gazebo>
+  
+  <gazebo>      
+    <plugin filename="libhector_gazebo_ros_gps.so" name="gps" >
+      <alwaysOn>true</alwaysOn>
+      <updateRate>1.0</updateRate>
+      <bodyName>base_link</bodyName>
+      <topicName>fix</topicName>
+      <velocityTopicName>fix_vel</velocityTopicName>
+      <referenceLatitude>38.385</referenceLatitude>
+      <referenceLongitude>-0.515</referenceLongitude>
+      <drift>1.0 1.0 1.0</drift>
+      <gaussianNoise>0.1 0.1 0.1</gaussianNoise>
+      <velocityDrift>0 0 0</velocityDrift>
+      <velocityGaussianNoise>0.1 0.1 0.1</velocityGaussianNoise>
+    </plugin>
+  </gazebo>
+  
+  <gazebo>      
+    <plugin filename="libhector_gazebo_ros_imu.so" name="imu" >
+      <alwaysOn>true</alwaysOn>
+      <updateRate>10.0</updateRate>
+      <bodyName>base_link</bodyName>
+      <topicName>imu</topicName>
+      <accelDrift>1.0 1.0 1.0</accelDrift>
+      <rateDrift>1.0 1.0 1.0</rateDrift>
+      <yawDrift>1.0</yawDrift>
+      <gaussianNoise>0.1</gaussianNoise>
+    </plugin>
+  </gazebo>
+  
+</robot>

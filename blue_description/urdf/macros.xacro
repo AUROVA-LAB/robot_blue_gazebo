@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+
+<robot>
+
+  <macro name="base" params="name">
+    <link name="${name}">
+    
+    <!-- pose and inertial -->
+    <pose>-0.45 0 -0.203 0 0 0</pose>
+    
+    <inertial>
+      <mass value="5"/>
+      <origin rpy="0 0 0" xyz="-0.45 0 -0.203"/>
+      <inertia ixx="0.0395416666667" ixy="0" ixz="0" iyy="0.106208333333" iyz="0" izz="0.106208333333"/>
+    </inertial>
+    
+    <collision name="${name}_collision">
+      <geometry>
+        <box size="1.672 0.797 0.03"/>
+      </geometry>
+    </collision>
+    
+    <visual name="${name}_visual">
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="1.672 0.797 0.03"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+    
+    <collision name="${name}_caster_collision">
+      <origin rpy=" 0 0 0" xyz="0.6 0 -0.203"/>
+      <geometry>
+        <sphere radius="0.203"/>
+      </geometry>
+      <surface>
+        <friction>
+          <ode>
+            <mu>0</mu>
+            <mu2>0</mu2>
+            <slip1>1.0</slip1>
+            <slip2>1.0</slip2>
+          </ode>
+        </friction>
+      </surface>
+    </collision>
+    
+    </link>
+  </macro>
+
+  <macro name="wheel" params="name length radius">
+    <link name="${name}">    
+      
+    <inertial>
+      <mass value="0.2"/>
+      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+      <inertia ixx="0.00052666666" ixy="0" ixz="0" iyy="0.00052666666" iyz="0" izz="0.001"/>
+    </inertial>
+    
+    <collision name="${name}_collision">
+      <origin rpy="0 1.5707 1.5707" xyz="0 0 0" />
+      <geometry>
+        <cylinder length="${length}" radius="${radius}"/>
+      </geometry>
+    </collision>
+    
+    <visual name="${name}_visual">
+      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="${length}" radius="${radius}"/>
+      </geometry>      
+    </visual>
+    
+    </link>
+  </macro>
+  
+  <macro name="wheel_join" params="name child origin_xyz">
+      <joint name="${name}" type="continuous">
+        <origin rpy="0 0 0" xyz="${origin_xyz}"/>
+        <child link="${child}" />
+        <parent link="base_link"/>
+        <axis rpy="0 0 0" xyz="0 1 0"/>
+        <limit effort="10000" velocity="1000"/>
+        <joint_properties damping="1.0" friction="1.0" />
+    </joint>  
+  </macro>
+  
+  
+  <macro name="caster" params="name">
+    <link name="${name}">
+      <inertial>
+        <mass value="0.1"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+      </inertial>
+  
+      <collision name="${name}_collision">
+        <origin rpy="0 1.5707 1.5707" xyz="0 0 0" />
+        <geometry>
+          <sphere radius="0.203"/>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0</mu>
+              <mu2>0</mu2>
+              <slip1>1.0</slip1>
+              <slip2>1.0</slip2>
+            </ode>
+          </friction>
+        </surface>
+      </collision> 
+    </link>
+  </macro>
+  
+  <macro name="bar" params="name">
+    <link name="${name}">
+      <inertial>
+        <mass value="0.1"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+      </inertial>
+  
+      <collision name="${name}_collision">
+        <origin rpy="0 0 0" xyz="0 0 0" />
+          <geometry>
+            <cylinder length="0.4" radius="0.02"/>
+          </geometry>
+      </collision> 
+      
+      <visual name="${name}_visual">
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <cylinder length="0.4" radius="0.02"/>
+        </geometry> 
+        <material name="white"/>     
+      </visual>
+    </link>
+  </macro>
+  
+  <macro name="generic_join" params="name child origin_xyz">
+      <joint name="${name}" type="continuous">
+        <origin rpy="0 0 0" xyz="${origin_xyz}"/>
+        <child link="${child}" />
+        <parent link="base_link"/>
+    </joint>  
+  </macro>
+
+</robot>
