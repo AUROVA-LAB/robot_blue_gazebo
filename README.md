@@ -4,8 +4,6 @@
 
 - System requirements: Ubuntu 20.04, ROS Noetic, and Gazebo 11.
 
-- Install Gazebo and Gazebo ROS Package: http://gazebosim.org/tutorials?tut=ros_installing&cat=connect_ros
-
 - Install package for GPS and IMU (download kinetic branch): https://github.com/tu-darmstadt-ros-pkg/hector_gazebo
 
 - Install package for Velodyne: https://bitbucket.org/DataspeedInc/velodyne_simulator/src/master/
@@ -24,11 +22,15 @@ sudo mv /PATH_TO_gazebo_models/* /usr/share/gazebo-11/models
 ```
 
 - Install this package.
+```shell
+catkin_make --only-pkg-with-deps robot_blue_gazebo
+```
 
 ### Example of usage:
 
-You can run an example following the instructions in: [application_navigation](https://github.com/AUROVA-LAB/application_navigation) and [application_localization](https://github.com/AUROVA-LAB/application_localization).
+You can run an example following the instructions in [applications](https://github.com/AUROVA-LAB/applications) (Example 2).
 
+### Gazebo plugins
 In this package, there is a gazebo plugin to create animated actors which stop when there is an obstacle in front of them. Here is an example of use:
 
 ```
