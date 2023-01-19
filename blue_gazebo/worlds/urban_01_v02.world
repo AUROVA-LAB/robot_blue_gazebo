@@ -4913,6 +4913,20 @@
               <max_y>0.475</max_y>
               <min_y>-0.475</min_y>
             </model>
+            <model>
+              robot0
+              <max_x>1.32</max_x>
+              <min_x>-0.27</min_x>
+              <max_y>0.475</max_y>
+              <min_y>-0.475</min_y>
+            </model>
+            <model>
+              robot1
+              <max_x>1.32</max_x>
+              <min_x>-0.27</min_x>
+              <max_y>0.475</max_y>
+              <min_y>-0.475</min_y>
+            </model>
         </obstacles>
 
         <trajectory id="0" type="walking">
