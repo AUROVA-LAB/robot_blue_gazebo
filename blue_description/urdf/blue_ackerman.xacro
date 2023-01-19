@@ -96,15 +96,18 @@ limitations under the License.
   <xacro:property name="servo_stall_torque" value="5.649"/>
   <xacro:property name="servo_no_load_speed" value="4.553"/>
 
-  <material name="blue">
+   <material name="blue">
      <color rgba="0 0 0.8 1"/>
    </material>
    <material name="gray">
     <color rgba="0.5 0.5 0.5 1.0"/>
-   </material>   
+   </material>  
+      <material name="white">
+    <color rgba="1.0 1.0 1.0 1.0"/>
+   </material>  
    <material name="flat_black">
     <color rgba="0 0 0 1"/>
-   </material> 
+   </material>
 
 
   <!-- Null inertial element. This is needed to make the model work with
@@ -134,6 +137,26 @@ limitations under the License.
   <!-- base_link must have geometry so that its axes can be displayed in
        rviz. -->
   <link name="base_link"/>
+
+  <joint name="gps_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="gps"/>
+    <origin xyz="0.82 -0.25 0.445" rpy="0.0 0.0 0.0"/>
+  </joint>
+
+  <link name='gps'>
+    <visual>
+      <geometry>
+        <cylinder length="0.05" radius="0.07"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.05" radius="0.07"/>
+      </geometry>
+    </collision>
+  </link>
 
   <joint name="base_link_to_chassis" type="fixed">
     <parent link="base_link"/>
@@ -618,7 +641,7 @@ limitations under the License.
     <plugin filename="libhector_gazebo_ros_gps.so" name="gps" >
       <alwaysOn>true</alwaysOn>
       <updateRate>1.0</updateRate>
-      <bodyName>base_link</bodyName>
+      <bodyName>gps</bodyName>
       <topicName>fix</topicName>
       <velocityTopicName>fix_vel</velocityTopicName>
       <referenceLatitude>38.385</referenceLatitude>
