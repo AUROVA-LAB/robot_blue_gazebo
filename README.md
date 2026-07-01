@@ -84,3 +84,6 @@ In this package, there is a gazebo plugin to create animated actors which stop w
 </actor>
 ```
 More information about the skins and animations available can be found at https://classic.gazebosim.org/tutorials?tut=actor&cat=build_robot. About this plugin, the actor stops when the obstacle is at *stop_distance* meters in front of it. The *animation_factor* is used to synchronize the animation with the movement. The *obstacle* tag is used for defining the obstacles, in this case the robot blue. Each model is defined by its name and four parameters to define the collision rectangle of the model with respect to its position (in this case it is in the center of the rear wheels and not in the center of the model). Finally, you define the trajectory of the actor. You can define multiple trajectories sorted by its id, using different animations. Each trajectory is defined by a sequence of waypoints
+
+## ✨ License
+This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0) and is intended for non-commercial academic use. If you are interested in using the software for commercial purposes, don't hesitate to get in touch with us via [email](mailto:miguelangel.munoz@ua.es).
